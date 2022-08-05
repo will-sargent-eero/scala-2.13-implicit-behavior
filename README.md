@@ -2,7 +2,7 @@
 
 Following on from [blog post](https://tersesystems.com/blog/2022/06/12/what-scala-adds-to-a-logging-api/), I realized that the implicit behavior that I'm seeing where I can provide an implicit `ToValue[Foo]` without having an import tax `import fb._` only happens on 2.13.
 
-That is, I can compile the following in 2.13, but not in 2.13:
+That is, I can compile the following in 2.13, but not in 2.12:
 
 ```scala
 val logger = LoggerFactory.getLogger.withFieldBuilder(SomeFieldBuilder)
@@ -43,4 +43,6 @@ trait FooImplicitObjectBuilder extends FieldBuilder {
 object FooImplicitObjectBuilder extends FooImplicitObjectBuilder
 ```
 
+Apparently this is because you can get the exact type you want with an implicit val, but an implicit object [has its own type](https://stackoverflow.com/questions/65258339/why-prefer-implicit-val-over-implicit-object).
 
+There must be something in the [implicit rules](https://www.scala-lang.org/files/archive/spec/2.13/07-implicits.html#implicit-parameters) for 2.13 that covers this exactly, but the spec is very dense.

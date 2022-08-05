@@ -1,5 +1,7 @@
 target/
 .idea/
+.metals/
+.vscode/
 .bsp/
 .bloop/
 *.log
